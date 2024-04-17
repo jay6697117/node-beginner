@@ -99,4 +99,4 @@ try {
 
 
 // 1.5 移动/重命名文件
-fs.renameSync(path.resolve(__dirname, './test.txt'),path.resolve(__dirname, './aaa/test66.txt'))
+fs.renameSync(path.resolve(__dirname, './newTest.txt'),path.resolve(__dirname, './aaa/test66.txt'))
