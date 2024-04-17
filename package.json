@@ -1,0 +1,21 @@
+{
+  "name": "beginner",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node index.js",
+    "tsup": "tsup ./main.js --format cjs",
+    "ncc": " ncc build ./main.js -o dist"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.11.16",
+    "@vercel/ncc": "^0.38.1",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3"
+  }
+}
