@@ -7,11 +7,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const testDir = path.resolve(__dirname, './test.txt');
 
-
 // 1.1 读取文件
 // const txtContent = fs.readFileSync(testDir, 'utf-8')
 // console.log(txtContent);
-
 
 // 1.2 写入文件
 // fs.writeFileSync(path.resolve(__dirname, './newTest.txt'), 'hello world -666')
@@ -24,7 +22,6 @@ const testDir = path.resolve(__dirname, './test.txt');
 
 // // 写入到新文件
 // fs.writeFileSync(path.resolve(__dirname, './logo666.png'), imgBuf, 'binary');
-
 
 // 1.3 获取文件信息
 // console.log('__dirname :>> ', __dirname);
@@ -97,6 +94,53 @@ try {
 // const txtContent = fs.readFileSync(testDir, 'utf-8')
 // console.log(txtContent);
 
-
 // 1.5 移动/重命名文件
-fs.renameSync(path.resolve(__dirname, './newTest.txt'),path.resolve(__dirname, './aaa/test66.txt'))
+// fs.renameSync(path.resolve(__dirname, './newTest.txt'),path.resolve(__dirname, './aaa/test66.txt'))
+
+// 1.6 删除文件
+// fs.unlinkSync(path.resolve(__dirname, './aaa/test66.txt'))
+// fs.rmSync(path.resolve(__dirname, './aaa/test.txt'))
+// 删除 test-dir 目录（包含其子文件）
+// fs.rmSync(path.resolve(__dirname, './aaa'), { recursive: true })
+
+// 2.1 读取目录所有文件
+// const files = fs.readdirSync(path.resolve(__dirname, './aaa'), { withFileTypes: true });
+// console.log(
+//   files.map(file => {
+//     console.log(file.isDirectory());
+//     return { name: file.name, isDirectory: file.isDirectory() };
+//   })
+// );
+
+// 2.2 创建目录
+// fs.mkdirSync(path.resolve(__dirname, 'test-dir/a/b/c/d'), { recursive: true })
+
+// 2.3 删除目录
+// fs.rmdirSync(path.resolve(__dirname, 'test-dir'), { recursive: true })
+
+// 2.4 监听目录变更
+// 监听当前目录下所有的文件和子目录中的文件
+
+// fs.watch(path.resolve(__dirname, './'), { recursive: true }, (eventType, filename) => {
+//   console.log(`File '${filename}' has changed: ${eventType}`);
+// });
+
+function getAllFiles(dirPath, arrayOfFiles) {
+  const files = fs.readdirSync(dirPath, { withFileTypes: true });
+
+  arrayOfFiles = arrayOfFiles || [];
+
+  files.forEach(file => {
+    if (file.isDirectory()) {
+      arrayOfFiles = getAllFiles(path.resolve(dirPath, file.name), arrayOfFiles);
+    } else {
+      arrayOfFiles.push(path.resolve(dirPath, file.name));
+    }
+  });
+
+  return arrayOfFiles;
+}
+
+// 获取当前目录下所有文件
+const currentDir = path.resolve(__dirname, './');
+console.log(getAllFiles(currentDir));
