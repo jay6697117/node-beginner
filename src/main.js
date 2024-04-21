@@ -1,7 +1,9 @@
 import fs from 'fs';
+import util from 'util';
 import { default as fsPromises } from 'fs/promises';
 import { fileURLToPath } from 'url';
 import { dirname, default as path } from 'path';
+import { stringify } from 'javascript-stringify';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -125,6 +127,7 @@ try {
 //   console.log(`File '${filename}' has changed: ${eventType}`);
 // });
 
+/*
 function getAllFiles(dirPath, arrayOfFiles) {
   const files = fs.readdirSync(dirPath, { withFileTypes: true });
 
@@ -144,3 +147,96 @@ function getAllFiles(dirPath, arrayOfFiles) {
 // 获取当前目录下所有文件
 const currentDir = path.resolve(__dirname, './');
 console.log(getAllFiles(currentDir));
+*/
+
+// util 模块
+
+// 1.1 对象转字符串
+// 复杂对象
+// const testObj = {
+//   a: 1,
+//   b: {
+//     c: 2,
+//     d: [3, 4, 5],
+//     e: () => {
+//       console.log(6)
+//     }
+//   },
+//   f: '7',
+//   g: [{ 8: [{ 9: 10 }] }],
+//   h() {
+//     console.log(11)
+//   }
+// }
+// // console.log(JSON.stringify(testObj));
+
+// // console.log(util.inspect(testObj, { depth: Math.Infinity }))
+// console.log(stringify(testObj, null, 2))
+
+// 1.2 格式化字符串
+// console.log(util.format('%s:%s', 'foo', 'bar')) // 'foo:bar'
+// console.log(util.format('%d + %d = %d', 1, 2, 3)) // '1 + 2 = 3'
+
+// console.log(
+//   util.format('My name is %j', { firstName: 'John', lastName: 'Doe' })
+// )
+// // 'My name is {"firstName":"John","lastName":"Doe"}'
+
+// // node 占位符 (%s、%d、%j 等 区别
+// console.log(util.format('%s', 'foo')) // 'foo'  字符串
+// console.log(util.format('%d', 'foo')) // 'NaN'  数字
+// console.log(util.format('%j', 'foo')) // '"foo"'  JSON
+
+// 1.3 promise 转回调
+/*
+function foo() {
+  return Promise.resolve('hello world')
+}
+
+function bar() {
+  return Promise.reject(new Error('error reject'))
+}
+
+const callbackFoo = util.callbackify(foo)
+const callbackBar = util.callbackify(bar)
+
+callbackFoo((err, ret) => {
+  if (err) {
+    console.log('err 1:', err)
+    return
+  }
+  console.log(ret)
+})
+
+callbackBar((err, ret) => {
+  if (err) {
+    console.log('err 2:', err)
+    return
+  }
+  console.log(ret)
+})
+*/
+// 1.4 回调转 promise
+/*
+const promiseFs = util.promisify(fs.readFile);
+console.log('promiseFs :', promiseFs);
+const res1 =  stringify(promiseFs, null, 2);
+console.log('res1 :>> ', res1);
+
+const data =  await promiseFs(path.resolve(__dirname, '../package.json'))
+console.log('data:', data.toString());
+
+promiseFs(path.resolve(__dirname, '../package.json')).then(data1 => {
+  console.log('data1:', data1.toString());
+})
+*/
+// 1.5 判断数据类型
+// 判断数据类型
+/*
+console.log(util.isArray([])); // true
+console.log(util.isRegExp(/some regexp/)); // true
+console.log(util.isDate(new Date())); // true
+console.log(util.isPrimitive(null)); // true
+console.log(util.isPrimitive(1)); // true
+console.log(util.isPrimitive(()=>{})); // false
+*/
