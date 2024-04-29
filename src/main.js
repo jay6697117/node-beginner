@@ -240,3 +240,6 @@ console.log(util.isPrimitive(null)); // true
 console.log(util.isPrimitive(1)); // true
 console.log(util.isPrimitive(()=>{})); // false
 */
+// fetch('http://127.0.0.1:4275?hello=world', {
+//   method: 'POST'
+// })

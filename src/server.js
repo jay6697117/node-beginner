@@ -81,6 +81,7 @@ const req = https.request(
 req.end()
 */
 
+/*
 const url = new URL(
   'https://api.juejin.cn/content_api/v1/content/article_rank?category_id=1&type=hot&count=3&from=1&aid=2608&uuid=7145810834685003271&spider=0'
 );
@@ -112,3 +113,78 @@ const req = https.request(
 // req.write('请求实体')
 req.write(JSON.stringify({ name: 'xm' }));
 req.end();
+*/
+
+// 1.3 fetch 和 axios
+
+// fetch('https://json-server-demo-rho.vercel.app/users')
+//   .then(res => {
+//     console.log('res', res);
+//     return res.json();
+//   })
+//   .then(data => {
+//     console.log(data);
+//   })
+//   .catch(err => {
+//     console.error(err);
+//   });
+
+/*
+fetch(
+  'https://api.juejin.cn/content_api/v1/content/article_rank?category_id=1&type=hot&count=3&from=1&aid=2608&uuid=7145810834685003271&spider=0'
+)
+  .then(res => {
+    console.log('res:\n', res);
+    return res.json();
+  })
+  .then(data => {
+    console.log('data:\n', data);
+  })
+  .catch(err => {
+    console.error(err);
+  });
+*/
+
+/* import axios from 'axios';
+
+axios
+  .get(
+    'https://api.juejin.cn/content_api/v1/content/article_rank?category_id=1&type=hot&count=3&from=1&aid=2608&uuid=7145810834685003271&spider=0'
+  )
+  .then(res => {
+    console.log(res.data);
+  })
+  .catch(err => {
+    console.error(err);
+  });
+ */
+
+import http from 'http';
+
+/*
+const server = http.createServer((req, res) => {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/html');
+  res.end('<h1>Hello, World!</h1>');
+});
+server.listen(4275, () => {
+  console.log('Server running at http://127.0.0.1:4275/');
+});
+ */
+
+// 3 request 内容介绍
+// 3.1 请求路径和方法
+const server = http.createServer((req, res) => {
+  const { url, method } = req;
+  console.log('req', req)
+  console.log(method, url);
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/html');
+  res.end('<h1>Hello, World!</h1>');
+});
+server.listen(4275, () => {
+  console.log('Server running at http://127.0.0.1:4275/');
+});
+
+
+// 3.2 query 参数解析
