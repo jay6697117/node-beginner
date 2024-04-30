@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
+
   <body>
+    <div id="demo"></div>
     <script>
       // fetch('https://json-server-demo-rho.vercel.app/users')
       //   .then(res => {
@@ -18,9 +20,30 @@
       //   .catch(err => {
       //     console.error(err);
       //   });
-      fetch('http://127.0.0.1:4275?hello=world', {
-        method: 'POST'
-      });
+      const demo = document.getElementById('demo');
+      fetch('http://127.0.0.1:4275?hello=world&a=1&b=2', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer your-token',
+          'Custom-Header': 'Custom Value'
+        },
+        body: JSON.stringify({
+          name: '张俊华',
+          age: 33
+        })
+      })
+        .then(res => {
+          console.log('res', res);
+          return res.json();
+        })
+        .then(data => {
+          console.log('data', data, typeof data);
+          // demo.innerHTML = data;
+          demo.innerHTML = JSON.stringify(data);
+        })
+        .catch(err => console.error(err));
     </script>
   </body>
 </html>

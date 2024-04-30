@@ -176,15 +176,53 @@ server.listen(4275, () => {
 // 3.1 请求路径和方法
 const server = http.createServer((req, res) => {
   const { url, method } = req;
-  console.log('req', req)
-  console.log(method, url);
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/html');
-  res.end('<h1>Hello, World!</h1>');
+  console.log('method:', method, ' - ', 'url:', url);
+  const query = Object.fromEntries(new URL(url, 'http://localhost').searchParams);
+  console.log('query:', query);
+
+  console.log('headers:', req.headers);
+  let body = [];
+  req
+    .on('data', chunk => {
+      body.push(chunk);
+    })
+    .on('end', () => {
+      body = Buffer.concat(body).toString();
+      console.log('body 1:', body, typeof body);
+      body && (body = JSON.parse(body));
+      console.log('body 2:', body, typeof body);
+      res.statusCode = 200;
+      // 设置响应头以允许跨域请求
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization,Custom-Header');
+      // res.setHeader('Content-Type', 'text/html');
+      res.setHeader('Content-Type', 'application/json');
+      // res.end('<h1>Hello, World!</h1>');
+      const tempObj = { a: 11, b: 22 };
+      const result = { ...tempObj, ...body };
+      console.log('result', result);
+      res.end(JSON.stringify(result));
+    });
+
+  // res.statusCode = 200;
+  // // 设置响应头以允许跨域请求
+  // res.setHeader('Access-Control-Allow-Origin', '*');
+  // res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  // res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  // // res.setHeader('Content-Type', 'text/html');
+  // res.setHeader('Content-Type', 'application/json');
+  // // res.end('<h1>Hello, World!</h1>');
+  // const tempObj = { a: 1, b: 2 };
+  // const result = { ...tempObj, ...body };
+  // console.log('result', result)
+  // res.end(JSON.stringify(result));
 });
 server.listen(4275, () => {
   console.log('Server running at http://127.0.0.1:4275/');
 });
 
-
 // 3.2 query 参数解析
+
+
+// 4 response 内容介绍
