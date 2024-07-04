@@ -176,11 +176,11 @@ server.listen(4275, () => {
 // 3.1 请求路径和方法
 const server = http.createServer((req, res) => {
   const { url, method } = req;
-  console.log('method:', method, ' - ', 'url:', url);
+  console.log('method::\n', method, ' - ', 'url:', url);
   const query = Object.fromEntries(new URL(url, 'http://localhost').searchParams);
-  console.log('query:', query);
+  console.log('query::\n', query);
 
-  console.log('headers:', req.headers);
+  console.log('headers:\n', req.headers);
   let body = [];
   req
     .on('data', chunk => {
@@ -192,6 +192,8 @@ const server = http.createServer((req, res) => {
       body && (body = JSON.parse(body));
       console.log('body 2:', body, typeof body);
       res.statusCode = 200;
+      // res.statusCode = 404;
+      // res.statusCode = 500;
       // 设置响应头以允许跨域请求
       res.setHeader('Access-Control-Allow-Origin', '*');
       res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
@@ -202,7 +204,14 @@ const server = http.createServer((req, res) => {
       const tempObj = { a: 11, b: 22 };
       const result = { ...tempObj, ...body };
       console.log('result', result);
-      res.end(JSON.stringify(result));
+      // res.end(JSON.stringify(result));
+      // res.end('<h1>Hello, World 666!</h1>');
+      // res.write('<h1>');
+      // res.write('Hello');
+      // res.write(', World 666!');
+      // res.write('</h1>');
+      res.write(JSON.stringify(result));
+      res.end();
     });
 
   // res.statusCode = 200;
@@ -223,6 +232,5 @@ server.listen(4275, () => {
 });
 
 // 3.2 query 参数解析
-
 
 // 4 response 内容介绍
