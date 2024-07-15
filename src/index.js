@@ -41,9 +41,9 @@ const { exec, execSync } = ChildProcess;
 // console.log(ls.toString())
 
 
-const file = '../src/index.js'
-const execProcess = exec(`git log -1 --pretty="%ci" ${file}`)
-execProcess.stdout.on('data', (data) => {
-  console.log(`stdout: ${data}`)
-  console.log(new Date(data))
-})
+// const file = '../src/index.js'
+// const execProcess = exec(`git log -1 --pretty="%ci" ${file}`)
+// execProcess.stdout.on('data', (data) => {
+//   console.log(`stdout: ${data}`)
+//   console.log(new Date(data))
+// })
