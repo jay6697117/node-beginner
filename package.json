@@ -3,11 +3,15 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "dev": "node index.js",
-    "tsup": "tsup ./main.js --format cjs",
-    "ncc": " ncc build ./main.js -o dist"
+    "tsup": "tsup ./src/ts-demo.ts --format cjs",
+    "ncc": " ncc build ./src/ts-demo.ts -o nccDist",
+    "tsc:compile": "tsc",
+    "bun:compile": "bun build ./src/ts-demo.ts --outdir ./bunDist",
+    "type-check": "tsc --noEmit",
+    "custom:compile": "node -r ./src/ts-register.js ./src/ts-demo.ts"
   },
   "keywords": [],
   "author": "",
